@@ -1,0 +1,27 @@
+[debug] [2018-01-31T23:46:29.333Z] ----------------------------------------------------------------------
+[debug] [2018-01-31T23:46:29.335Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2018-01-31T23:46:29.335Z] CLI Version:   3.17.4
+[debug] [2018-01-31T23:46:29.335Z] Platform:      darwin
+[debug] [2018-01-31T23:46:29.335Z] Node Version:  v8.5.0
+[debug] [2018-01-31T23:46:29.336Z] Time:          Thu Feb 01 2018 10:16:29 GMT+1030 (ACDT)
+[debug] [2018-01-31T23:46:29.337Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-01-31T23:46:29.349Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-01-31T23:46:29.349Z] > authorizing via signed-in user
+[debug] [2018-01-31T23:46:29.350Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-01-31T23:46:29.351Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token: '1/FJc57y1FD6U0gJyHYt6iNoObQOdiI2sPemlFCkgqI0M',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Thu Feb 01 2018 10:16:29 GMT+1030 (ACDT)
+[debug] [2018-01-31T23:46:30.230Z] <<< HTTP RESPONSE 200
+[debug] [2018-01-31T23:46:30.237Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/myapp-45947  
+  
+ Thu Feb 01 2018 10:16:30 GMT+1030 (ACDT)
+[debug] [2018-01-31T23:46:31.279Z] <<< HTTP RESPONSE 200
+[debug] [2018-01-31T23:46:31.280Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/myapp-45947/tokens  
+  
+ Thu Feb 01 2018 10:16:31 GMT+1030 (ACDT)
+[debug] [2018-01-31T23:46:32.418Z] <<< HTTP RESPONSE 200

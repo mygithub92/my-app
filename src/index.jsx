@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { render } from 'react-dom';
-import Store from './stores/Store';
-import App from './App';
-// Import routing components
-import {Router, Route, IndexRoute, browserHistory} from 'react-router';
-
-import Market from './market/market.component.jsx'
+import React from 'react';
+import Market from './market/market.component.jsx';
 import MarketDetail from './market/market-details.component.jsx'
+import {Router, Route, IndexRoute, browserHistory} from 'react-router';
+import { render } from 'react-dom';
 
-
-render(
-    <App/>,
+render(            
+    <Router history={browserHistory}>
+        <Route path="/" component={Market}/>
+        <Route path="/markets/:name" component={MarketDetail}/>
+    </Router>,
     document.getElementById('container')
-);
+)
+
+

@@ -3,10 +3,20 @@ import { Link } from 'react-router';
 import axios from 'axios';
 
 class Market extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {markets:[]};
+        this.fetchData();
+    };
+
+    fetchData = () => {
+        axios.get('/api/markets').then(res => {
+            this.setState({markets: res.data});
+        }).catch(err => console.log(err));
+    }
+
     render(){
-        // Get data from route props
-        const markets = this.props.data;
-        // Map through cars and return linked cars
+        const markets = this.state.markets;
         const marketNode = markets.map((market) => {
             return (
                 <Link

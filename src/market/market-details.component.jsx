@@ -1,18 +1,30 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
+import axios from 'axios';
 
 class MarketDetail extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+        const name = this.props.params.name;
+        this.fetchData(name);
+    };
+
+    fetchData = (name) => {
+        axios.get(`/api/market?name=${name}`).then(res => {
+            this.setState({market: res.data});
+        }).catch(err => console.log(err));
+    };
+
     handleRedirect(){
         browserHistory.push('/');
-    }
+    };
+
     render(){
-        const markdets = this.props.route.data;
-        const id = this.props.params.id;
-        const market = markdets.filter(market => {
-            if(market.MarketName == id) {
-                return market;
-            }
-        })[0];
+        const market = this.state.market;
+        if(!market) {
+            return null;
+        }
 
         return (
             <div>
@@ -25,10 +37,10 @@ class MarketDetail extends Component {
                     </div>
                     <div className="col-sm-6 col-md-4">
                        <ul>
-                           <li><strong>Market Currency</strong>: {market.MarketCurrencyLong}</li>
-                           <li><strong>Base Currency</strong>: {market.BaseCurrencyLong}</li>
-                           <li><strong>Min Trade Size</strong>: {market.MinTradeSize}</li>
-                           <li><strong>Created</strong>: {market.Created}</li>
+                           <li><strong>Market Name</strong>: {market.MarketName}</li>
+                           <li><strong>High</strong>: {market.High + ''}</li>
+                           <li><strong>Low</strong>: {market.Low + ''}</li>
+                           <li><strong>Volume</strong>: {market.Volume + ''}</li>
                        </ul>
                     </div>
                     <div className="col-md-12">
