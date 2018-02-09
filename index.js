@@ -3,6 +3,11 @@ const path = require('path')
 const port = process.env.PORT || 3000
 const app = express()
 const rp = require('request-promise');
+var bodyParser = require('body-parser');
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
 // serve static assets normally
 app.use(express.static(__dirname + '/public'))
 
@@ -34,6 +39,21 @@ let experied = false;
 let _timestamp;
 let cachedMarketSummary = [];
 let cachedMarketDetails = {};
+
+let favouriteMarkets = [];
+
+app.post('/api/market/favourite', (req, res) => {
+    let name = req.body.marketName;
+    let favourite = req.body.favourite;
+    if (favourite) {
+        favouriteMarkets.push(name);
+    } else {
+        let index = favouriteMarkets.findIndex((element) => element === name);
+        if (index > -1) {
+            favouriteMarkets.splice(index, 1);
+        }
+    }
+});
 
 app.get('/api/markets', (req, res) => {
     const now = new Date();
