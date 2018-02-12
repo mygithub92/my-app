@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import axios from 'axios';
 import * as FontAwesome from 'react-icons/lib/fa'
 
-class Market extends Component {
+class Favourite extends Component {
     constructor(props) {
         super(props);
         this.state = {markets:[]};
@@ -11,7 +11,7 @@ class Market extends Component {
     };
 
     fetchData = () => {
-        axios.get('/api/icons').then(res => {
+        axios.get('/api/favourites').then(res => {
             this.setState({markets: res.data});
         }).catch(err => console.log(err));
     }
@@ -23,15 +23,15 @@ class Market extends Component {
                 <div className="list-group-item">
                     <div className="row">
                         <div className="col-10">
-                        <Link
-                            to={"/markets/"+market.MarketName}
-                            key={market.MarketName}>
-                            <p><img src={market.LogoUrl} width="42" height="42"/>{market.MarketName}</p>
-                            <p>{market.MinTradeSize}</p>
-                        </Link>
+                            <Link
+                                to={"/markets/"+market.MarketName}
+                                key={market.MarketName}>
+                                <p><img src={market.LogoUrl} width="42" height="42"/>{market.MarketName}</p>
+                                <p>{market.MinTradeSize}</p>
+                            </Link>
                         </div>
                         <div className="col-2">
-                        <Favourite market={market}/>
+                            <Delete market={market}/>
                         </div>
                     </div>
                 </div>
@@ -39,7 +39,6 @@ class Market extends Component {
         });
         return (
             <div>
-                <h1>Markets</h1>
                 <div className="list-group">
                     {marketNode}
                 </div>
@@ -48,23 +47,19 @@ class Market extends Component {
     }
 }
 
-class Favourite extends Component {
-
+class Delete extends Component {
     constructor(props) {
-        super(props);
-        this.state = {favourited: false};
+        super(props)
     }
 
     handleClick = () => {
-        this.setState({favourited: !this.state.favourited});
-        axios.post('/api/market/favourite', {market: this.props.market, favourite: !this.state.favourited});
+        axios.post('/api/market/favourite', {market: this.props.market, favourite: false});
     }
 
     render() {
         return <span onClick={this.handleClick}>
-                {this.state.favourited ? <FontAwesome.FaStar size="50"/> : <FontAwesome.FaStarO size="50"/>}
-            </span>;
+            <FontAwesome.FaTrash size="50"/>
+        </span>
     }
 }
-
-export default Market
+export default Favourite
