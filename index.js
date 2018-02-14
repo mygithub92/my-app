@@ -5,6 +5,7 @@ const app = express()
 const rp = require('request-promise');
 const request = require('request');
 const fs = require('fs');
+const download = require('image-downloader');
 
 var bodyParser = require('body-parser');
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
@@ -18,25 +19,6 @@ app.use(express.static(__dirname + '/public'))
 // app.get('*', function (request, response){
 //     response.sendFile(path.resolve(__dirname, 'public', 'index.html'))
 // })
-
-const page = data => {
-    return `
-    <html>
-        <head>
-            <title>Altcoin</title>
-            <!--Stylesheet-->
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-            <link rel="stylesheet" href="style.css">
-        </head>
-        <body>
-            <!--Container for React rendering-->
-            <div id="container"></div>
-            <!--Bundled file-->
-            <script src="bundle.js"></script>
-        </body>
-    </html>
-    `
-}
 
 let experied = false;
 let _timestamp;
@@ -107,32 +89,25 @@ app.get('/api/market', (req, res) => {
     }
 });
 
-app.get('/api/icons', (req, res) => {
-    rp('https://bittrex.com/api/v1.1/public/getmarkets')
-        .then(res => {
-            const result = JSON.parse(res);
-            return result.result;
-        }).then(data => {
-            const cachedMarketSummary = data.filter(element => element.IsActive);
-            cachedMarketSummary.forEach(element => {
-                if(element.LogoUrl) {
-                download(element.LogoUrl, element.marketName, () => {
-                    console.log('done');
-                });
-            }
-            })
-        });
-});
-
-
-var download = function(uri, filename, callback){
-  request.head(uri, function(err, res, body){
-    // console.log('content-type:', res.headers['content-type']);
-    // console.log('content-length:', res.headers['content-length']);
-
-    request(uri).pipe(fs.createWriteStream(__dirname + '/public/icons/' + filename)).on('close', callback);
-  });
-};
+// app.get('/api/icons', (req, res) => {
+//     rp('https://bittrex.com/api/v1.1/public/getmarkets')
+//         .then(res => {
+//             const result = JSON.parse(res);
+//             return result.result;
+//         }).then(data => {
+//             data.forEach(element => {
+//                 console.log(element.LogoUrl);
+//                 if(element.LogoUrl) {
+//                     download.image({
+//                         url: element.LogoUrl,
+//                         dest: __dirname + '/public/icons/'
+//                     }).then(({filename, image}) => {
+//                         console.log('File saved to', filename);
+//                     }).catch(err => console.log(err))
+//                 }
+//             })
+//         });
+// });
 
 app.get('/', (req, res) => {
     res.status(200).send(page());

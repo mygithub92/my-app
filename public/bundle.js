@@ -20372,7 +20372,7 @@ var Market = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Market.__proto__ || Object.getPrototypeOf(Market)).call(this, props));
 
         _this.fetchData = function () {
-            _axios2.default.get('/api/icons').then(function (res) {
+            _axios2.default.get('/api/markets').then(function (res) {
                 _this.setState({ markets: res.data });
             }).catch(function (err) {
                 return console.log(err);
@@ -20389,6 +20389,12 @@ var Market = function (_Component) {
         value: function render() {
             var markets = this.state.markets;
             var marketNode = markets.map(function (market) {
+                var localIconUrl = null;
+                if (market.LogoUrl) {
+                    var index = market.LogoUrl.lastIndexOf('/');
+                    localIconUrl = '/icons' + market.LogoUrl.substring(index);
+                    console.log(localIconUrl);
+                }
                 return _react2.default.createElement(
                     'div',
                     { className: 'list-group-item' },
@@ -20406,7 +20412,7 @@ var Market = function (_Component) {
                                 _react2.default.createElement(
                                     'p',
                                     null,
-                                    _react2.default.createElement('img', { src: market.LogoUrl, width: '42', height: '42' }),
+                                    _react2.default.createElement('img', { src: localIconUrl, width: '42', height: '42' }),
                                     market.MarketName
                                 ),
                                 _react2.default.createElement(
