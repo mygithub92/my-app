@@ -11,8 +11,7 @@
     ],
     "rewrites": [
       {
-        "source": "/api", "function": "widgets",
-        "destination": "/index.html"
+        "source": "/api", "function": "widgets"
       }
     ]
   }
