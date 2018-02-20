@@ -6,6 +6,20 @@ const rp = require('request-promise');
 const request = require('request');
 const fs = require('fs');
 const download = require('image-downloader');
+var admin = require('firebase-admin');
+
+// Imports the Google Cloud client library
+const Storage = require('@google-cloud/storage');
+// Creates a client
+const storage = new Storage();
+//export GOOGLE_APPLICATION_CREDENTIALS="/Users/David/react/my-app/myapp-45947-firebase-adminsdk-eh7wx-ed0e85c773.json"
+/**
+ * TODO(developer): Uncomment the following lines before running the sample.
+ */
+const bucketName = 'gs://myapp-45947-icons';
+const filename = '/Users/David/react/my-app/public/icons/d7711420-de59-4c1f-b4da-e4eb4846d56f.png';
+
+
 
 var bodyParser = require('body-parser');
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
@@ -15,10 +29,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 // serve static assets normally
 app.use(express.static(__dirname + '/public'))
 
-// Handles all routes so you do not get a not found error
-// app.get('*', function (request, response){
-//     response.sendFile(path.resolve(__dirname, 'public', 'index.html'))
-// })
+
 
 let experied = false;
 let _timestamp;
@@ -108,6 +119,22 @@ app.get('/api/market', (req, res) => {
 //             })
 //         });
 // });
+
+app.get('/api/upload/icons', (req, res) => {
+    storage
+    .bucket(bucketName)
+    .upload(filename)
+    .then(() => {
+      console.log(`${filename} uploaded to ${bucketName}.`);
+    })
+    .catch(err => {
+      console.error('ERROR:', err);
+    });
+
+    fs.readdir(__dirname + '/public/icons/', (err, files) => {
+        files.forEach(file => console.log(file));
+    })
+});
 
 app.get('/', (req, res) => {
     res.status(200).send(page());
