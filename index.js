@@ -120,21 +120,26 @@ app.get('/api/market', (req, res) => {
 //         });
 // });
 
-app.get('/api/upload/icons', (req, res) => {
-    storage
-    .bucket(bucketName)
-    .upload(filename)
-    .then(() => {
-      console.log(`${filename} uploaded to ${bucketName}.`);
-    })
-    .catch(err => {
-      console.error('ERROR:', err);
-    });
+// app.get('/api/upload/icons', (req, res) => {
+   
+//     const path = __dirname + '/public/icons/'
+//     fs.readdir(path, (err, files) => {
+//         files.forEach(file => {
+//             storage
+//             .bucket(bucketName)
+//             .upload(path + file)
+//             .then(() => {
+//               console.log(`${filename} uploaded to ${bucketName}.`);
+//             })
+//             .catch(err => {
+//               console.error('ERROR:', err);
+//             });
+//             // console.log(path + file)
+//         });
+//     })
+// });
 
-    fs.readdir(__dirname + '/public/icons/', (err, files) => {
-        files.forEach(file => console.log(file));
-    })
-});
+
 
 app.get('/', (req, res) => {
     res.status(200).send(page());

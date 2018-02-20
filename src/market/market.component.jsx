@@ -3,6 +3,10 @@ import { Link } from 'react-router';
 import axios from 'axios';
 import * as FontAwesome from 'react-icons/lib/fa'
 
+const Storage = require('@google-cloud/storage');
+// Creates a client
+const storage = new Storage();
+
 class Market extends Component {
     constructor(props) {
         super(props);
