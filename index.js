@@ -78,7 +78,7 @@ app.get('/api/markets', (req, res) => {
             Object.keys(result).forEach(name => markets.push(result[name]));
             console.log(markets);
             res.status(200).send(markets);
-        })
+        }).catch(e => console.log(e));
 });
 
 app.get('/api/market', (req, res) => {
@@ -99,7 +99,7 @@ app.get('/api/market', (req, res) => {
             }
             // cachedMarketDetails[marketName] = {...cachedMarketDetails[marketName], ...data};
             res.status(200).send(cachedMarketDetails[marketName]);
-        });
+        }).catch(e => console.log(e));
     } else {
         console.log('Using cached data for /api/market');
         res.status(200).send(cachedMarketDetails[marketName]);
@@ -181,7 +181,7 @@ function weeklyUpdate() {
                             }
                             database.ref('markets/' + market.MarketName).set(market);
                         })
-                    });
+                    }).catch(e => console.log(e));
                 //   database.ref('markets/' + 'LTC').set({"MarketCurrency":"LTC","BaseCurrency":"BTC","MarketCurrencyLong":"Litecoin","BaseCurrencyLong":"Bitcoin","MinTradeSize":0.01378854,"MarketName":"BTC-LTC","IsActive":true,"Created":"2014-02-13T00:00:00","Notice":null,"IsSponsored":null,"LogoUrl":"https://bittrexblobstorage.blob.core.windows.net/public/6defbc41-582d-47a6-bb2e-d0fa88663524.png"});
               }
           })
