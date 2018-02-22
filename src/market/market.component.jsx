@@ -19,12 +19,6 @@ class Market extends Component {
     render(){
         const markets = this.state.markets;
         const marketNode = markets.map((market) => {
-            let localIconUrl = null;
-            if(market.LogoUrl) {
-                const index = market.LogoUrl.lastIndexOf('/');
-                localIconUrl = '/icons' + market.LogoUrl.substring(index);
-                console.log(localIconUrl);
-            }
             return (
                 <div className="list-group-item">
                     <div className="row">
@@ -32,7 +26,7 @@ class Market extends Component {
                         <Link
                             to={"/markets/"+market.MarketName}
                             key={market.MarketName}>
-                            <p><img src={localIconUrl} width="42" height="42"/>{market.MarketName}</p>
+                            <p><img src={market.LogoUrl} width="42" height="42"/>{market.MarketName}</p>
                             <p>{market.MinTradeSize}</p>
                         </Link>
                         </div>
