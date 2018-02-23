@@ -22,7 +22,7 @@ const storage = new Storage();
 const bucketName = 'gs://myapp-45947-icons';
 const filename = '/Users/David/react/my-app/public/icons/d7711420-de59-4c1f-b4da-e4eb4846d56f.png';
 
-const serviceAccount = require("/Users/David/Downloads/myapp-45947-firebase-adminsdk-eh7wx-78a7f24e2a.json");
+const serviceAccount = require("/Users/David/Downloads/serviceAccount.json");
 var config = {
     apiKey: "AIzaSyDJrPj303CpQXP88XyNUJqjK_YDNHKbaZ4",
     authDomain: "myapp-45947.firebaseapp.com",
@@ -53,17 +53,27 @@ let cachedMarketDetails = {};
 let favouriteMarkets = [];
 
 app.post('/api/market/favourite', (req, res) => {
-    let market = req.body.market;
-    let favourite = req.body.favourite;
-    if (favourite) {
-        favouriteMarkets.push(market);
+    if(firebase.auth().currentUser){
+        favourite(user.uid);
     } else {
-        let index = favouriteMarkets.findIndex((element) => element.MarketName === market.MarketName);
-        if (index > -1) {
-            favouriteMarkets.splice(index, 1);
-        }
+        firebase.auth().signInWithEmailAndPassword('linlwangster@gmail.com', '12345678').catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // ...
+          });
+    
+          firebase.auth().onAuthStateChanged((user) => {
+              if(user) {
+                  favourite(user.uid);
+              }
+          })
     }
 });
+
+function favourite(uid) {
+    const ref = database.ref('users/' + uid);
+}
 
 app.get('/api/favourites', (req, res) => {
     res.status(200).send(favouriteMarkets);
